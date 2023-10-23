@@ -19,25 +19,31 @@ app.use(morgan('dev'));
 app.use(helmet());
 // END MIDDLEWARE //
 
-
-
 // START ROUTES //
 
 // get the events
+
+
 app.get("/events", async (req, res) => {
     let arrayOfEvents = await Event.find();
     res.send(arrayOfEvents);
-})
+});
 
 app.delete("/events/:idOfEvent", async (req, res) => {
-    // get id of Event through the url params
-    let id = req.params.idOfEvent;
-
     // .findByIdAndDelete()
-    let response = await Event.findByIdAndDelete(id)
-    console.log(response)
-    res.send('deleted Event!')
-})
+    let id = req.params.idOfEvent;
+    let response = await Event.findByIdAndDelete(id);
+    console.log(response);
+    res.send('deleted event!')
+});
+
+app.put('/events/:idOfEvent', async (req, res) => {
+    let id = req.params.idOfEvent;
+    let response = await Event.findByIdAndUpdate(id, req.body, { new: true });
+    console.log(response);
+    res.send(response)
+});
+
 
 app.post("/events", async (req, res) => {
     // 1. get the data that was sent from the frontend
@@ -47,14 +53,13 @@ app.post("/events", async (req, res) => {
 
     try {
         let response = await Event.create(req.body);
-        res.status(201).send("created a new event!")
+        res.status(201).send(response)
     } catch (err) {
         console.error(err)
         res.send("ERROR")
     }
 
 });
-
 
 
 // END ROUTES //
