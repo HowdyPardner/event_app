@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 const EventForm = () => {
-  
+
   const [eventData, setEventData] = useState({
     title: '',
     date: '',
@@ -14,15 +14,18 @@ const EventForm = () => {
     }
   });
 
+
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setEventData(prevState => ({
+    setEventData((prevState) => ({
       ...prevState,
       [name]: value
     }));
   };
 
   const handleOrganizerChange = (e) => {
+
     const { name, value } = e.target;
     setEventData(prevState => ({
       ...prevState,
@@ -34,23 +37,42 @@ const EventForm = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log("doing submit");
     e.preventDefault();
 
     try {
-      const response = await axios.post('/api/events', eventData);
+      const response = await axios({
+        method: "POST",
+        url: '/server/events',
+        data: eventData
+      });
+      console.log(response);
       if (response.status >= 200 && response.status < 300) {
         console.log('Event registered successfully:', response.data);
+
       } else {
         console.error('Error registering event:', response.data);
       }
     } catch (error) {
       console.error('There was an error sending the request:', error);
     }
+    
+    setEventData({
+      title: '',
+      date: '',
+      location: '',
+      description: '',
+      organizer: {
+        name: '',
+        role: ''
+      }
+    })
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        {/* input */}
         <div>
           <label htmlFor="title">Title:</label>
           <input
@@ -61,7 +83,7 @@ const EventForm = () => {
             onChange={handleInputChange}
           />
         </div>
-
+        {/* input */}
         <div>
           <label htmlFor="date">Date:</label>
           <input
@@ -73,6 +95,7 @@ const EventForm = () => {
           />
         </div>
 
+        {/* input */}
         <div>
           <label htmlFor="location">Location:</label>
           <input
@@ -84,6 +107,7 @@ const EventForm = () => {
           />
         </div>
 
+        {/* input */}
         <div>
           <label htmlFor="description">Description:</label>
           <textarea
@@ -94,6 +118,7 @@ const EventForm = () => {
           />
         </div>
 
+        {/* input */}
         <div>
           <h4>Organizer Details</h4>
 
