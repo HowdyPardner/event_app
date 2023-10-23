@@ -6,12 +6,12 @@ import EventList from './components/EventList'
 
 function App() {
   const [count, setCount] = useState(0)
-
+  const [events, setEvents] = useState([]);
   return (
     <>
     <h1>My Events</h1>
     <EventForm/>
-    <EventList/>
+      <EventList events={events} setEvents={setEvents}/>
       
     </>
   )

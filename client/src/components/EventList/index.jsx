@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './index.css';
 
-const EventList = () => {
+const EventList = ({events, setEvents}) => {
 
   // compnent lifecycle
   // 1. mounts (state runs, code runs, JSX gets put on screen)
@@ -13,7 +13,7 @@ const EventList = () => {
 
 
 
-  const [events, setEvents] = useState([]);
+
 
 
   useEffect(() => {
