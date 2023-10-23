@@ -29,6 +29,15 @@ app.get("/events", async (req, res) => {
     res.send(arrayOfEvents);
 })
 
+app.delete("/events/:idOfEvent", async (req, res) => {
+    // get id of Event through the url params
+    let id = req.params.idOfEvent;
+
+    // .findByIdAndDelete()
+    let response = await Event.findByIdAndDelete(id)
+    console.log(response)
+    res.send('deleted Event!')
+})
 
 app.post("/events", async (req, res) => {
     // 1. get the data that was sent from the frontend
@@ -45,6 +54,7 @@ app.post("/events", async (req, res) => {
     }
 
 });
+
 
 
 // END ROUTES //
