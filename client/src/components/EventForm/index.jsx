@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const EventForm = () => {
+const EventForm = ({setEvents}) => {
 
   const [eventData, setEventData] = useState({
     title: '',
@@ -49,7 +49,9 @@ const EventForm = () => {
       console.log(response);
       if (response.status >= 200 && response.status < 300) {
         console.log('Event registered successfully:', response.data);
-
+        setEvents((events)=>{
+          return [...events, response.data]
+        })
       } else {
         console.error('Error registering event:', response.data);
       }

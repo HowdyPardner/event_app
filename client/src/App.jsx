@@ -10,7 +10,7 @@ function App() {
   return (
     <>
     <h1>My Events</h1>
-    <EventForm/>
+    <EventForm setEvents={setEvents}/>
       <EventList events={events} setEvents={setEvents}/>
       
     </>
