@@ -13,40 +13,40 @@ const app = express();
 
 
 // START MIDDLEWARE //
+app.use(helmet());
+app.use(morgan('dev'));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "../client/dist")));
+
 app.use(cors({
     origin: "*"
 }));
-app.use(morgan('dev'));
-app.use(helmet());
-// END MIDDLEWARE //
 
-
-app.use(express.static(path.join(__dirname, "../client/dist")));
-
-app.use((req, res, next)=> {
+// for every request, remove '/server'
+app.use((req, res, next) => {
     if (req.path.startsWith('/server')) {
         req.url = req.url.replace('/server', ''); // strip /server from the path
     }
     next();
 })
+// END MIDDLEWARE //
+
+
+
 // START ROUTES //
-
-// get the events
-
-
 app.get("/events", async (req, res) => {
     let arrayOfEvents = await Event.find();
     res.send(arrayOfEvents);
 });
 
+
 app.delete("/events/:idOfEvent", async (req, res) => {
-    // .findByIdAndDelete()
     let id = req.params.idOfEvent;
     let response = await Event.findByIdAndDelete(id);
     console.log(response);
     res.send('deleted event!')
 });
+
 
 app.put('/events/:idOfEvent', async (req, res) => {
     let id = req.params.idOfEvent;
@@ -57,11 +57,6 @@ app.put('/events/:idOfEvent', async (req, res) => {
 
 
 app.post("/events", async (req, res) => {
-    // 1. get the data that was sent from the frontend
-    // let eventData = req.body.eventData;
-
-    // 2. Model.create(eventData)
-
     try {
         let response = await Event.create(req.body);
         res.status(201).send(response)
@@ -69,16 +64,15 @@ app.post("/events", async (req, res) => {
         console.error(err)
         res.send("ERROR")
     }
-
 });
 
 
-// app.get('/*', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
-// });
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+});
 
 // END ROUTES //
 
 app.listen(PORT, () => {
     console.log(`Server LIVE on port ${PORT}`);
-});2
+});
