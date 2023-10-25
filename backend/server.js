@@ -67,8 +67,12 @@ app.post("/events", async (req, res) => {
 });
 
 
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+});
+
 // END ROUTES //
 
 app.listen(PORT, () => {
     console.log(`Server LIVE on port ${PORT}`);
-});
+});2
