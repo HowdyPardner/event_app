@@ -5,7 +5,9 @@ const helmet = require('helmet'); // adds a bunch of standard security to server
 require('dotenv').config();
 require('./config/db.js');
 const Event = require('./models/Event.js');
+const path = require('path');
 const PORT = 3000;
+
 
 const app = express();
 
