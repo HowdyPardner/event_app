@@ -22,7 +22,7 @@ app.use(helmet());
 // END MIDDLEWARE //
 
 
-app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
 // START ROUTES //
 
@@ -67,9 +67,9 @@ app.post("/events", async (req, res) => {
 });
 
 
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
-});
+// app.get('/*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+// });
 
 // END ROUTES //
 
