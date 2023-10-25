@@ -20,6 +20,7 @@ app.use(helmet());
 // END MIDDLEWARE //
 
 
+app.use(express.static(path.join(__dirname, "dist")));
 
 // START ROUTES //
 
